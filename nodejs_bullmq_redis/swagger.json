@@ -1,0 +1,447 @@
+{
+  "definitions": {},
+  "host": "localhost:3333",
+  "info": {
+    "title": "express-typeorm-postgres",
+    "version": "0.0.1",
+    "license": {
+      "name": "MIT"
+    },
+    "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3).\n\nexpress, typescript, REST"
+  },
+  "paths": {
+    "*": {
+      "options": {
+        "summary": "*",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "/health",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "database": {
+                  "type": "string",
+                  "example": "PostgreSQL 15.1 (Debian 15.1-1.pgdg110+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit"
+                },
+                "redisCacheConnection": {
+                  "type": "string",
+                  "example": "CONNECTED"
+                },
+                "redisQueueHealth": {
+                  "type": "object",
+                  "properties": {
+                    "connection": {
+                      "type": "string",
+                      "example": "PONG"
+                    },
+                    "activeCount": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "waitingCount": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "completedCount": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "failedCount": {
+                      "type": "number",
+                      "example": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "304": {},
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/technology": {
+      "get": {
+        "summary": "/technology",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "displayName",
+                  "description"
+                ]
+              }
+            }
+          },
+          "304": {},
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "summary": "/technology",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "displayName": {
+                  "type": "string",
+                  "example": "BullMQ"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A javascript library that leverages Redis to set up queues"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 12
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/technology/{technologyId}": {
+      "get": {
+        "summary": "/technology/{technologyId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "technologyId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "displayName",
+                "description"
+              ]
+            }
+          },
+          "304": {}
+        },
+        "tags": []
+      },
+      "put": {
+        "summary": "/technology/{technologyId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "technologyId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "displayName": {
+                  "type": "string",
+                  "example": "BullMQ"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A javascript library that leverages Redis to set up queues"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 12
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      },
+      "delete": {
+        "summary": "/technology/{technologyId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "technologyId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 12
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/queue": {
+      "post": {
+        "summary": "/queue",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "It can be anything"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "jobId": {
+                  "type": "string",
+                  "example": "6"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/upload/upload": {
+      "post": {
+        "summary": "/upload/upload",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "302": {
+            "description": "Found",
+            "schema": {
+              "type": "string",
+              "example": "<p>Found. Redirecting to <a href=\"/result\">/result</a></p>"
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "text/html"
+        ]
+      }
+    },
+    "/upload/result": {
+      "get": {
+        "summary": "/upload/result",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\" />\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\t<title>Image Processor</title>\n\t<link rel=\"stylesheet\" href=\"css/main.css\" />\n</head>\n\n\n\t<body>\n\t\t<div class=\"gallery-wrapper\">\n\t\t\t\n\t\t\t\t<p>The following are the processed images:</p>\n\t\t\t\t<ul>\n\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-120.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-144.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-1440.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-160.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-180.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-240.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-288.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-360.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-480.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-720.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-90.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-96.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t</ul>\n\t\t\t\t\n\t\t</div>\n\t</body>\n\n</html>\n"
+            }
+          },
+          "304": {},
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "text/html",
+          "application/json"
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "/",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\" />\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\t<title>Image Processor</title>\n\t<link rel=\"stylesheet\" href=\"css/main.css\" />\n</head>\n\n\n\t<body>\n\t\t<div class=\"home-wrapper\">\n\t\t\t<h1>Image Processor</h1>\n\t\t\t<p>\n\t\t\t\tResizes an image to multiple sizes and converts it to a\n\t\t\t\t<a href=\"https://en.wikipedia.org/wiki/WebP\">webp</a> format.\n\t\t\t</p>\n\t\t\t<form action=\"/upload\" method=\"POST\" enctype=\"multipart/form-data\">\n\t\t\t\t<input type=\"file\" name=\"image\" placeholder=\"Select image from your computer\" />\n\t\t\t\t<button type=\"submit\">Upload Image</button>\n\t\t\t</form>\n\t\t</div>\n\t</body>\n\n</html>\n"
+            }
+          },
+          "304": {},
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "application/json",
+          "text/html"
+        ]
+      }
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "tags": []
+}

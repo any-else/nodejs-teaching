@@ -1,0 +1,486 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "express-typeorm-postgres",
+    "version": "0.0.1",
+    "license": {
+      "name": "MIT"
+    },
+    "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3).\n\nexpress, typescript, REST"
+  },
+  "paths": {
+    "*": {
+      "options": {
+        "summary": "*",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "/health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "database": {
+                      "type": "string",
+                      "example": "PostgreSQL 15.1 (Debian 15.1-1.pgdg110+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit"
+                    },
+                    "redisCacheConnection": {
+                      "type": "string",
+                      "example": "CONNECTED"
+                    },
+                    "redisQueueHealth": {
+                      "type": "object",
+                      "properties": {
+                        "connection": {
+                          "type": "string",
+                          "example": "PONG"
+                        },
+                        "activeCount": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "waitingCount": {
+                          "type": "number",
+                          "example": 0
+                        },
+                        "completedCount": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "failedCount": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/technology": {
+      "get": {
+        "summary": "/technology",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "displayName": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "displayName",
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      },
+      "post": {
+        "summary": "/technology",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Body"
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 12
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/technology/{technologyId}": {
+      "get": {
+        "summary": "/technology/{technologyId}",
+        "parameters": [
+          {
+            "name": "technologyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "displayName",
+                    "description"
+                  ]
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        },
+        "tags": []
+      },
+      "put": {
+        "summary": "/technology/{technologyId}",
+        "parameters": [
+          {
+            "name": "technologyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Body"
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 12
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      },
+      "delete": {
+        "summary": "/technology/{technologyId}",
+        "parameters": [
+          {
+            "name": "technologyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 12
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/queue": {
+      "post": {
+        "summary": "/queue",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "example": "It can be anything"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string",
+                      "example": "6"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/upload/upload": {
+      "post": {
+        "summary": "/upload/upload",
+        "responses": {
+          "302": {
+            "description": "Found",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "example": "<p>Found. Redirecting to <a href=\"/result\">/result</a></p>"
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/upload/result": {
+      "get": {
+        "summary": "/upload/result",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\" />\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\t<title>Image Processor</title>\n\t<link rel=\"stylesheet\" href=\"css/main.css\" />\n</head>\n\n\n\t<body>\n\t\t<div class=\"gallery-wrapper\">\n\t\t\t\n\t\t\t\t<p>The following are the processed images:</p>\n\t\t\t\t<ul>\n\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-120.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-144.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-1440.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-160.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-180.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-240.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-288.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-360.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-480.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-720.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-90.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-96.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t</ul>\n\t\t\t\t\n\t\t</div>\n\t</body>\n\n</html>\n"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\" />\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\t<title>Image Processor</title>\n\t<link rel=\"stylesheet\" href=\"css/main.css\" />\n</head>\n\n\n\t<body>\n\t\t<div class=\"gallery-wrapper\">\n\t\t\t\n\t\t\t\t<p>The following are the processed images:</p>\n\t\t\t\t<ul>\n\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-120.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-144.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-1440.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-160.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-180.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-240.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-288.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-360.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-480.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-720.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-90.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<li><img src=images/Screenshot from 2024-08-25 21-54-31-96.webp&#39; /></li>\n\t\t\t\t\t\t\n\t\t\t\t</ul>\n\t\t\t\t\n\t\t</div>\n\t</body>\n\n</html>\n"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "/",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\" />\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\t<title>Image Processor</title>\n\t<link rel=\"stylesheet\" href=\"css/main.css\" />\n</head>\n\n\n\t<body>\n\t\t<div class=\"home-wrapper\">\n\t\t\t<h1>Image Processor</h1>\n\t\t\t<p>\n\t\t\t\tResizes an image to multiple sizes and converts it to a\n\t\t\t\t<a href=\"https://en.wikipedia.org/wiki/WebP\">webp</a> format.\n\t\t\t</p>\n\t\t\t<form action=\"/upload\" method=\"POST\" enctype=\"multipart/form-data\">\n\t\t\t\t<input type=\"file\" name=\"image\" placeholder=\"Select image from your computer\" />\n\t\t\t\t<button type=\"submit\">Upload Image</button>\n\t\t\t</form>\n\t\t</div>\n\t</body>\n\n</html>\n"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\" />\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\t<title>Image Processor</title>\n\t<link rel=\"stylesheet\" href=\"css/main.css\" />\n</head>\n\n\n\t<body>\n\t\t<div class=\"home-wrapper\">\n\t\t\t<h1>Image Processor</h1>\n\t\t\t<p>\n\t\t\t\tResizes an image to multiple sizes and converts it to a\n\t\t\t\t<a href=\"https://en.wikipedia.org/wiki/WebP\">webp</a> format.\n\t\t\t</p>\n\t\t\t<form action=\"/upload\" method=\"POST\" enctype=\"multipart/form-data\">\n\t\t\t\t<input type=\"file\" name=\"image\" placeholder=\"Select image from your computer\" />\n\t\t\t\t<button type=\"submit\">Upload Image</button>\n\t\t\t</form>\n\t\t</div>\n\t</body>\n\n</html>\n"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    }
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "http://localhost:3333"
+    }
+  ],
+  "components": {
+    "requestBodies": {
+      "Body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "displayName": {
+                  "type": "string",
+                  "example": "BullMQ"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A javascript library that leverages Redis to set up queues"
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      }
+    }
+  }
+}

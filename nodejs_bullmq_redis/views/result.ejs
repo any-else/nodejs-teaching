@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./head'); %>
+
+	<body>
+		<div class="gallery-wrapper">
+			<% if (imgFiles.length> 0){%>
+				<p>The following are the processed images:</p>
+				<ul>
+					<% for (let imgFile of imgFiles){ %>
+						<li><img src='file:///home/bellcrop/Desktop/learn-avand-nodejs/nodejs_bullmq_redis/public/images/Screenshot%20from%202024-08-25%2021-54-31-96.webp' /></li>
+						<% } %>
+				</ul>
+				<% } else{ %>
+					<p>
+						The image is being processed. Refresh after a few seconds to view the
+						resized images.
+					</p>
+					<% } %>
+		</div>
+	</body>
+
+</html>
